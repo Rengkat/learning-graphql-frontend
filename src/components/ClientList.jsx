@@ -18,7 +18,7 @@ const ClientList = () => {
               <div>alexrengkat@gmail.com</div>
               <div>0806750506</div>
               <div>
-                <div>
+                <div className="cursor-pointer">
                   <FaTrash />
                 </div>
               </div>
