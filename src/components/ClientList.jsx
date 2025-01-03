@@ -1,7 +1,25 @@
 import { FaTrash } from "react-icons/fa";
+import { gql, useQuery } from "@apollo/client";
+
+const headings = ["No", "Name", "Email", "Phone", ""];
+
+const GET_CLIENTS = gql`
+  query getClients {
+    clients {
+      id
+      name
+      email
+      phone
+    }
+  }
+`;
+
 const ClientList = () => {
-  const headings = ["No", "Name", "Email", "Phone", ""];
-  const clients = [1, 2, 3, 4, 5, 7, 8, 9, 0];
+  const { data, loading, error } = useQuery(GET_CLIENTS);
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>Error: {error.message}</h1>;
+
   return (
     <div className="pt-2 pb-2 border-b-[1px]">
       <div className="grid grid-cols-5 font-semibold bg-gray-300 py-3">
@@ -9,22 +27,20 @@ const ClientList = () => {
           <div key={heading}>{heading}</div>
         ))}
       </div>
-      <div className="">
-        {clients.map((client) => {
-          return (
-            <div key={client} className="grid grid-cols-5 py-[5px]">
-              <div>1</div>
-              <div>Alexander Rengkat</div>
-              <div>alexrengkat@gmail.com</div>
-              <div>0806750506</div>
-              <div>
-                <div className="cursor-pointer">
-                  <FaTrash />
-                </div>
+      <div>
+        {data.clients.map((client, index) => (
+          <div key={client.id} className="grid grid-cols-5 py-[5px]">
+            <div>{index + 1}</div>
+            <div>{client.name}</div>
+            <div>{client.email}</div>
+            <div>{client.phone}</div>
+            <div>
+              <div className="cursor-pointer">
+                <FaTrash />
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );
