@@ -1,18 +1,8 @@
 import { FaTrash } from "react-icons/fa";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_CLIENTS } from "./queries/clientQueries";
 
 const headings = ["No", "Name", "Email", "Phone", ""];
-
-const GET_CLIENTS = gql`
-  query getClients {
-    clients {
-      id
-      name
-      email
-      phone
-    }
-  }
-`;
 
 const ClientList = () => {
   const { data, loading, error } = useQuery(GET_CLIENTS);
